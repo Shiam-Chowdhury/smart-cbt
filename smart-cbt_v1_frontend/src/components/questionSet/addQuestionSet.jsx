@@ -46,16 +46,20 @@ const AddQuestionSet = () => {
   const [questions, setQuestions] = useState({});
   const [filtered, setfiltered] = useState({});
   const [tag, setTag] = useState("");
-  // const q = [];
+  const [selection, setSelection] = useState([]); // const q = [];
 
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await axios.get(`http://localhost:4000/question`);
         if (res.status === 200) {
-          console.log(res.data);
-          setQuestions(res.data.questions);
-          setfiltered(res.data.questions);
+          const temp = res.data.questions.map((ques) => {
+            ques.isAdded = false;
+            return ques;
+          });
+          setQuestions(temp);
+          setfiltered(temp);
+          console.log(temp);
           // setLoading(false);
         }
       } catch (error) {}
@@ -65,15 +69,20 @@ const AddQuestionSet = () => {
   }, []);
 
   useEffect(() => {
-    const setNewFiltered = () => {
-      let tempQuestions = questions.filter((question) => {
-        return question.tag === tag;
-      });
-      setfiltered(tempQuestions);
-    };
-
     setNewFiltered();
   }, [tag]);
+
+  useEffect(() => {
+    console.log(selection);
+  }, [selection]);
+
+  const setNewFiltered = () => {
+    const tempQuestions =
+      questions.length > 0 &&
+      questions[0] != undefined &&
+      questions.filter((question) => question.tag === tag);
+    setfiltered(tempQuestions);
+  };
 
   const filterByTag = (event) => {
     if (event.key === "Enter") {
@@ -81,13 +90,6 @@ const AddQuestionSet = () => {
       setTag(event.target.value);
     }
   };
-
-  // const setDataAfterFilter = () => {
-  //   let tempQuestions = questions.filter((question) => {
-  //     return question.tag === tag;
-  //   });
-  //   setfiltered(tempQuestions);
-  // };
 
   const addQuestion = () => {
     const ques = {
@@ -152,6 +154,9 @@ const AddQuestionSet = () => {
             rowsPerPageOptions={[9]}
             checkboxSelection
             getRowId={(row) => row._id}
+            onSelectionChange={(newSelection) => {
+              setSelection(newSelection.rows);
+            }}
           />
         </div>
       </div>
