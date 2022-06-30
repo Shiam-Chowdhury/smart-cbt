@@ -1,10 +1,90 @@
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./addQuestionSet.scss";
-// import { userColumns, userRows } from "../../datatablesource";
-import { useState } from "react";
+import "./datatable.scss";
+
+const columns = [
+  // { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "details",
+    headerName: "Details",
+    width: 230,
+  },
+  {
+    field: "tag",
+    headerName: "Tag",
+    width: 230,
+  },
+
+  {
+    field: "rank",
+    headerName: "Rank",
+    width: 100,
+  },
+
+  {
+    field: "count",
+    headerName: "Count",
+    width: 160,
+  },
+];
+
+//temporary data
+const rows = [
+  {
+    id: 1,
+    details: "asdasdasd",
+    tag: "react",
+    rank: "4A",
+    count: 0,
+  },
+];
 
 const AddQuestionSet = () => {
-  const [questions, setQuestions] = useState([]);
+  const [data, setData] = useState(rows);
+  const [questions, setQuestions] = useState({});
+  const [filtered, setfiltered] = useState({});
+  const [tag, setTag] = useState("");
   const q = [];
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/question`);
+        if (res.status === 200) {
+          console.log(res.data);
+          setQuestions(res.data.questions);
+          setfiltered(res.data.questions);
+          // setLoading(false);
+        }
+      } catch (error) {}
+    };
+    getData();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    let tempQuestions = questions.filter((question) => {
+      return question.tag === tag;
+    });
+    setfiltered(tempQuestions);
+  }, [tag]);
+
+  const filterByTag = (event) => {
+    if (event.key === "Enter") {
+      console.log(event.target.value);
+      setTag(event.target.value);
+    }
+  };
+
+  const setDataAfterFilter = () => {
+    let tempQuestions = questions.filter((question) => {
+      return question.tag === tag;
+    });
+    setfiltered(tempQuestions);
+  };
+
   const addQuestion = () => {
     const ques = {
       is_from_bank: true,
@@ -15,11 +95,29 @@ const AddQuestionSet = () => {
       mark: 20,
     };
 
-    let temp = [...questions];
-    temp.push(ques);
-    setQuestions(temp);
-    console.log(questions);
+    // let temp = [...questions];
+    // temp.push(ques);
+    // setQuestions(temp);
+    // console.log(questions);
   };
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div>
+            <div className="cus-btn add" onClick={addQuestion}>
+              Add
+            </div>
+            <div className="cus-btn remove">Remove</div>
+          </div>
+        );
+      },
+    },
+  ];
 
   return (
     <>
@@ -33,38 +131,24 @@ const AddQuestionSet = () => {
               <label for="inputTag" class="col-form-label">
                 Filter by Tag
               </label>
-              <input type="text" class="form-control" id="inputTag" />
+              <input
+                type="text"
+                class="form-control"
+                id="inputTag"
+                onKeyPress={filterByTag}
+              />
             </div>
           </div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">details</th>
-                <th scope="col">tag</th>
-                <th scope="col">actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark asdasdadas asdfaf</td>
-                <td>react</td>
-                <td>
-                  <button
-                    type="button"
-                    class="cus-btn add"
-                    onClick={addQuestion}
-                  >
-                    Add
-                  </button>
-                  <button type="button" class="cus-btn remove">
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+          <DataGrid
+            className="datagrid"
+            rows={filtered}
+            columns={columns.concat(actionColumn)}
+            pageSize={9}
+            rowsPerPageOptions={[9]}
+            checkboxSelection
+            getRowId={(row) => row._id}
+          />
         </div>
       </div>
       <div className="question-set">

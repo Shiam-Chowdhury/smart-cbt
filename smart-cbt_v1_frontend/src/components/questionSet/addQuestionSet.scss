@@ -1,36 +1,37 @@
-.questions{
+.questions {
   margin: 10px;
   padding: 10px;
   width: 80%;
-  .header{
+  min-height: 600px;
+  .header {
     margin-bottom: 10px;
   }
 
-  .filter{
+  .filter {
     margin-bottom: 10px;
   }
 
-  .table{
-    .cus-btn{
-      padding: 2px 10px;
-      color: white;
-      margin-right: 5px;
-    }
+  .cus-btn {
+    padding: 2px 10px;
+    color: white;
+    margin-right: 5px;
+    display: inline-block;
+  }
 
-    .add{
-      background-color: green;
-    }
+  .add {
+    background-color: green;
+  }
 
-    .remove{
-      background-color: red;
-    }
+  .remove {
+    background-color: red;
   }
 }
 
-.question-set{
+.question-set {
   margin: 10px;
   padding: 10px;
-  .header{
+  margin-top: 120px;
+  .header {
     margin-bottom: 10px;
   }
 }
