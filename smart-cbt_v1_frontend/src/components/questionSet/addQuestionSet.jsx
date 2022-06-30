@@ -31,22 +31,22 @@ const columns = [
 ];
 
 //temporary data
-const rows = [
-  {
-    id: 1,
-    details: "asdasdasd",
-    tag: "react",
-    rank: "4A",
-    count: 0,
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     details: "asdasdasd",
+//     tag: "react",
+//     rank: "4A",
+//     count: 0,
+//   },
+// ];
 
 const AddQuestionSet = () => {
-  const [data, setData] = useState(rows);
+  // const [data, setData] = useState(rows);
   const [questions, setQuestions] = useState({});
   const [filtered, setfiltered] = useState({});
   const [tag, setTag] = useState("");
-  const q = [];
+  // const q = [];
 
   useEffect(() => {
     const getData = async () => {
@@ -65,10 +65,14 @@ const AddQuestionSet = () => {
   }, []);
 
   useEffect(() => {
-    let tempQuestions = questions.filter((question) => {
-      return question.tag === tag;
-    });
-    setfiltered(tempQuestions);
+    const setNewFiltered = () => {
+      let tempQuestions = questions.filter((question) => {
+        return question.tag === tag;
+      });
+      setfiltered(tempQuestions);
+    };
+
+    setNewFiltered();
   }, [tag]);
 
   const filterByTag = (event) => {
@@ -78,12 +82,12 @@ const AddQuestionSet = () => {
     }
   };
 
-  const setDataAfterFilter = () => {
-    let tempQuestions = questions.filter((question) => {
-      return question.tag === tag;
-    });
-    setfiltered(tempQuestions);
-  };
+  // const setDataAfterFilter = () => {
+  //   let tempQuestions = questions.filter((question) => {
+  //     return question.tag === tag;
+  //   });
+  //   setfiltered(tempQuestions);
+  // };
 
   const addQuestion = () => {
     const ques = {
@@ -98,7 +102,7 @@ const AddQuestionSet = () => {
     // let temp = [...questions];
     // temp.push(ques);
     // setQuestions(temp);
-    // console.log(questions);
+    console.log(ques);
   };
 
   const actionColumn = [
