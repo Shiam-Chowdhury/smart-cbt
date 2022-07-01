@@ -4,43 +4,6 @@ import { useEffect, useState } from "react";
 import "./addQuestionSet.scss";
 import "./datatable.scss";
 
-const columns = [
-  // { field: "id", headerName: "ID", width: 70 },
-  {
-    field: "details",
-    headerName: "Details",
-    width: 230,
-  },
-  {
-    field: "tag",
-    headerName: "Tag",
-    width: 230,
-  },
-
-  {
-    field: "rank",
-    headerName: "Rank",
-    width: 100,
-  },
-
-  {
-    field: "count",
-    headerName: "Count",
-    width: 160,
-  },
-];
-
-//temporary data
-// const rows = [
-//   {
-//     id: 1,
-//     details: "asdasdasd",
-//     tag: "react",
-//     rank: "4A",
-//     count: 0,
-//   },
-// ];
-
 const AddQuestionSet = () => {
   // const [data, setData] = useState(rows);
   const [questions, setQuestions] = useState({});
@@ -73,57 +36,76 @@ const AddQuestionSet = () => {
   }, [tag]);
 
   useEffect(() => {
-    console.log(selection);
+    console.log('ssss',selection);
+    setSelection(selection)
+
   }, [selection]);
 
   const setNewFiltered = () => {
     const tempQuestions =
       questions.length > 0 &&
-      questions[0] != undefined &&
+      questions[0] !== undefined &&
       questions.filter((question) => question.tag === tag);
     setfiltered(tempQuestions);
   };
 
   const filterByTag = (event) => {
     if (event.key === "Enter") {
-      console.log(event.target.value);
       setTag(event.target.value);
     }
   };
 
-  const addQuestion = () => {
-    const ques = {
+  const addQuestion = (data) => {
+    const modifiedQuestion = {
       is_from_bank: true,
-      question: {
-        details: "asad",
-        tag: "aasdasd",
-      },
-      mark: 20,
+      question: data,
+      mark: null,
     };
 
-    // let temp = [...questions];
-    // temp.push(ques);
-    // setQuestions(temp);
-    console.log(ques);
+    let temp = [...selection];
+    temp.push(modifiedQuestion);
+    setSelection(temp);
+
+    questions.map(question => {
+      if(question._id === data._id){
+        question.isAdded = true;
+      }
+    })
+
+    filtered.map(question => {
+      if(question._id === data._id){
+        question.isAdded = true;
+      }
+    })
+
   };
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div>
-            <div className="cus-btn add" onClick={addQuestion}>
-              Add
-            </div>
-            <div className="cus-btn remove">Remove</div>
-          </div>
-        );
-      },
-    },
-  ];
+  const removeQuestionFromList = (data, index) => {
+    console.log(data)
+    setSelection(selection.splice(index+1, 1))
+
+    questions.map(question => {
+      if(question._id === data.question._id){
+        question.isAdded = false;
+      }
+    })
+
+    filtered.map(question => {
+      if(question._id === data.question._id){
+        question.isAdded = false;
+      }
+    })
+  }
+
+  const setQuestionMark = (i, event) => {
+    console.log(i)
+    if (event.key === "Enter") {
+      selection[i].mark = event.target.value
+      console.log('ssss', selection);
+    }
+
+    
+  }
 
   return (
     <>
@@ -146,7 +128,41 @@ const AddQuestionSet = () => {
             </div>
           </div>
 
-          <DataGrid
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Details</th>
+                <th scope="col">Tag</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Count</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length > 0 && filtered[0] !== undefined && filtered.map((data, i) => {
+                return [
+                  <tr>
+                    <th scope="row">{i+1}</th>
+                    <td>{data.details}</td>
+                    <td>{data.tag}</td>
+                    <td>{data.rank}</td>
+                    <td>{data.count}</td>
+                    <td>{!data.isAdded &&
+                      <div className="cus-btn add" onClick={() => addQuestion(data)}>
+                        Add
+                      </div>
+                    }
+                      
+                      {/* <div className="cus-btn details">Details</div> */}
+                    </td>
+                  </tr>
+                ]
+              })}
+            </tbody>
+          </table>
+
+          {/* <DataGrid
             className="datagrid"
             rows={filtered}
             columns={columns.concat(actionColumn)}
@@ -154,10 +170,10 @@ const AddQuestionSet = () => {
             rowsPerPageOptions={[9]}
             checkboxSelection
             getRowId={(row) => row._id}
-            onSelectionChange={(newSelection) => {
-              setSelection(newSelection.rows);
+            onSelectionChange={(rows) => {
+              setSelection(rows);
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className="question-set">
@@ -174,7 +190,47 @@ const AddQuestionSet = () => {
             </div>
           </div>
           <div className="row">
-            <div className="questions"></div>
+            <div className="questions">
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Details</th>
+                <th scope="col">Tag</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Difficulty</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selection.length > 0 && selection[0] !== undefined && selection.map((data, i) => {
+                return [
+                  <tr>
+                    <th scope="row">{i+1}</th>
+                    <td>{data.question.details}</td>
+                    <td>{data.question.tag}</td>
+                    <td>{data.question.rank}</td>
+                    <td>{data.question.difficulty}</td>
+                    <td>{data.mark ? data.mark : 
+                      [
+                        <input type="text" className="markInput" onKeyPress={(e) => setQuestionMark(i, e)}/>
+                      ]
+                    }</td>
+                    <td>
+                      <div className="cus-btn remove" onClick={() => removeQuestionFromList(data, i)}>
+                        Remove
+                      </div>
+                    
+                      
+                      {/* <div className="cus-btn details">Details</div> */}
+                    </td>
+                  </tr>
+                ]
+              })}
+            </tbody>
+          </table>
+            </div>
           </div>
         </div>
       </div>
