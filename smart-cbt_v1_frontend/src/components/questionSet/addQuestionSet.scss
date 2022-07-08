@@ -42,4 +42,39 @@
   .header {
     margin-bottom: 10px;
   }
+
+  .btn-qs{
+    padding: 2px 10px;
+    color: white;
+    margin-right: 5px;
+    margin-left: 15px;
+  }
+
+  .add-btn{
+    background-color: green;
+  }
+
+  .partial-btn{
+    background-color: rgb(68, 68, 141);
+  }
+
+  .partial-set{
+    padding: 0;
+    margin-top: 10px;
+    .qs-btn{
+      padding: 2px 10px;
+      color: white;
+      background-color: green;
+      width: 70px;
+    }
+  }
+
+  .sets{
+    border-right: 2px solid black;
+  }
+
+  .pqs-questions{
+
+  }
 }
+

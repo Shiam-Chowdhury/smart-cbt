@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/smart-cbt_v1')
     }).catch(err => console.log(err));
 
 app.use('/question', question);
-app.use('/questionSet', questionSet);
+app.use('/question-set', questionSet);
 
 app.listen(4000, () => {
     console.log('app running on port 4000');

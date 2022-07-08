@@ -1,13 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const {getQuestionSets, saveQuestionSet} = require('../controllers/questionSetController');
 
-router.post('/signup', async (req, res) => {
+router.get('/', (req, res) => {
+    getQuestionSets(req, res);
 });
 
-router.post('/signin', async (req,res) => {
-});
-
-router.get('/all', async (req, res) => {
+router.post('/', async (req, res) => {
+    try{
+        saveQuestionSet(req, res);
+    }catch(error){
+        res.status(500).json({
+            error: error
+        })
+    }
 });
 
 module.exports = router;
