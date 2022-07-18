@@ -25,13 +25,14 @@ const Question = new Schema(
         remarks: String,
         answer: {
             options: Array,
-            matching_options: Array,
-            is_multiple_answer: Boolean,
+            // matching_options: Array,
+            // is_multiple_answer: Boolean,
             correct_answer: String,
+            correct_option: String,
         },
         count: Number,
         comments: String,
-        related_files: String,
+        // related_files: String,
     }
 );
 
@@ -40,20 +41,29 @@ const questionSetSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    questions: {
-        is_from_question_bank: Boolean,
-        question: [Question],
-        mark: String
-    },
-    is_used: Boolean,
-    partial_question_sets: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: 'PartialQuestionSet'
-        }
-    ],
-    created_by: {},
-    question_set_requisition: {}
+    questions: [{
+        is_from_bank: Boolean,
+        is_from_partial: Boolean,
+        mark: String,
+        question: Question
+    }],
+    // questions: {
+    //     is_from_question_bank: Boolean,
+    //     is_from_partial: Boolean,
+    //     // question: [Question],
+    //     question: {},
+    //     mark: String
+    // },
+    isUsed: Boolean,
+    // partial_question_sets: [
+    //     {
+    //         type: mongoose.Types.ObjectId,
+    //         ref: 'PartialQuestionSet'
+    //     }
+    // ],
+    // created_by: {},
+    // question_set_requisition: {},
+    // count: Number,
 });
 
 const QuestionSet = mongoose.model("QuestionSet", questionSetSchema);

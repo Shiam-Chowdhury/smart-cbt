@@ -16,7 +16,9 @@ const saveQuestionSetService = async (req, res) => {
     try {
         const newQuestionSet = new QuestionSet({
             ...req.body,
-            count: 0,
+            // name: req.body.name,
+            // questions: req.body.questions,
+            isUsed: false
         });
 
         const questionSet = await newQuestionSet.save();

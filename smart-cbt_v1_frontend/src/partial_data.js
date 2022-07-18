@@ -1,12 +1,12 @@
 const partialQuestionSets = [
     {
-        id: '001',
+        _id: '001',
         name: 'one one',
         questions: [
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00001',
+                    _id: '00001',
                     details: 'details 1',
                     tag:'react',
                     type: 'mcq',
@@ -17,12 +17,13 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             },
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00002',
+                    _id: '00002',
                     details: 'details 2',
                     tag:'react',
                     type: 'mcq',
@@ -33,12 +34,13 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             },
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00003',
+                    _id: '00003',
                     details: 'details 3',
                     tag:'react',
                     type: 'mcq',
@@ -49,18 +51,19 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             }
         ]
     },
     {
-        id: '002',
+        _id: '002',
         name: 'two two',
         questions: [
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00010',
+                    _id: '00010',
                     details: 'details 1',
                     tag:'vue',
                     type: 'mcq',
@@ -71,12 +74,13 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             },
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00011',
+                    _id: '00011',
                     details: 'details 2',
                     tag:'vue',
                     type: 'mcq',
@@ -87,12 +91,13 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             },
             {
                 is_from_question_bank: true,
                 question:{
-                    id: '00012',
+                    _id: '00012',
                     details: 'details 3',
                     tag:'vue',
                     type: 'mcq',
@@ -103,7 +108,8 @@ const partialQuestionSets = [
                     count: 0,
                     comments: 'asdadsasd'
                 },
-                mark: 10
+                mark: 10,
+                isAdded: false
             }
         ]
     },

@@ -242,7 +242,7 @@ const New = () => {
                 />
               </div>
 
-              <div className="formInput">
+              {/* <div className="formInput">
                 <label>related file</label>
                 <input
                   type="file"
@@ -250,7 +250,7 @@ const New = () => {
                   onChange={onChangeRelatedFile}
                   // value={related_file.name}
                 />
-              </div>
+              </div> */}
             </form>
             {/* <button onClick={handleClick}>Save Question</button> */}
           </div>

@@ -73,8 +73,14 @@
     border-right: 2px solid black;
   }
 
-  .pqs-questions{
-
+  .create{
+    .create-btn{
+      border: 1px solid green;
+      padding: 5px 10px;
+      background-color: green;
+      color: white;
+      margin-left: 10px;
+    }
   }
 }
 

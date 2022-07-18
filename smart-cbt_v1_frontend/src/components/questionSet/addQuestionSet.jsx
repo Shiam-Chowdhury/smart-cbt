@@ -12,9 +12,10 @@ const AddQuestionSet = () => {
   const [selection, setSelection] = useState([]); // const q = [];
   const [selectPartial, setSelectPartial] = useState(false);
   const [selectedPQS, setSelectedPQS] = useState({
-    questions: []
+    questions: [],
   });
   const [partialQuestions, setPartialQuestions] = useState([]);
+  const [qsName, setQsName] = useState("");
 
   useEffect(() => {
     console.log(partialQuestionSets);
@@ -51,7 +52,7 @@ const AddQuestionSet = () => {
   }, [selection]);
 
   useEffect(() => {
-    console.log(selectedPQS)
+    console.log(selectedPQS);
     setPartialQuestions(selectedPQS.questions);
   }, [selectedPQS]);
 
@@ -60,6 +61,7 @@ const AddQuestionSet = () => {
       questions.length > 0 &&
       questions[0] !== undefined &&
       questions.filter((question) => question.tag === tag);
+
     setfiltered(tempQuestions);
   };
 
@@ -93,10 +95,28 @@ const AddQuestionSet = () => {
     });
   };
 
+  const addQuesFromPartial = (data) => {
+    const modifiedQuestion = {
+      is_from_bank: false,
+      is_from_partial: true,
+      question: data.question,
+      mark: data.mark,
+    };
+
+    let temp = [...selection];
+    temp.push(modifiedQuestion);
+    setSelection(temp);
+
+    partialQuestions.map((ques) => {
+      if (ques.question._id === data.question._id) {
+        ques.isAdded = true;
+      }
+    });
+  };
+
   const selectPartialSet = (set) => {
     // console.log(set);
     setSelectedPQS(set);
-    
   };
 
   const removeQuestionFromList = (data, index) => {
@@ -106,6 +126,12 @@ const AddQuestionSet = () => {
     questions.map((question) => {
       if (question._id === data.question._id) {
         question.isAdded = false;
+      }
+    });
+
+    partialQuestions.map((ques) => {
+      if (ques.question._id === data.question._id) {
+        ques.isAdded = false;
       }
     });
 
@@ -121,6 +147,30 @@ const AddQuestionSet = () => {
     if (event.key === "Enter") {
       selection[i].mark = event.target.value;
       console.log("ssss", selection);
+    }
+  };
+
+  const changeQsName = (event) => {
+    setQsName(event.target.value);
+  };
+
+  const saveQuestionSet = async () => {
+    console.log(selection);
+
+    try {
+      await axios
+        .post(`http://localhost:4000/question-set/`, {
+          name: qsName,
+          questions: selection,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -219,7 +269,7 @@ const AddQuestionSet = () => {
                     partialQuestionSets.map((set, i) => {
                       return [
                         <tr>
-                          <th scope="row">{1+i}</th>
+                          <th scope="row">{1 + i}</th>
                           <td>{set.name}</td>
                           <td>{set.questions[0].question.tag}</td>
                           <td>
@@ -261,7 +311,14 @@ const AddQuestionSet = () => {
                           <td>{data.question.rank}</td>
                           <td>{data.question.count}</td>
                           <td>
-                            <div className="qs-btn">Select</div>
+                            {!data.isAdded && (
+                              <div
+                                className="qs-btn"
+                                onClick={() => addQuesFromPartial(data)}
+                              >
+                                Select
+                              </div>
+                            )}
                           </td>
                         </tr>,
                       ];
@@ -277,7 +334,12 @@ const AddQuestionSet = () => {
               <label for="inputTag" class="col-form-label">
                 Question Set Title
               </label>
-              <input type="text" class="form-control" id="inputTag" />
+              <input
+                type="text"
+                class="form-control"
+                id="inputTag"
+                onChange={changeQsName}
+              />
             </div>
           </div>
           <div className="row">
@@ -331,6 +393,11 @@ const AddQuestionSet = () => {
                     })}
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div className="row">
+            <div className="create-btn" onClick={saveQuestionSet}>
+              Create Question Set
             </div>
           </div>
         </div>

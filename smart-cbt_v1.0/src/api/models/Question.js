@@ -31,7 +31,7 @@ const questionSchema = new mongoose.Schema({
     },
     count: Number,
     comments: String,
-    related_files: String,
+    // related_files: String,
 });
 
 const Question = mongoose.model("Question", questionSchema);
