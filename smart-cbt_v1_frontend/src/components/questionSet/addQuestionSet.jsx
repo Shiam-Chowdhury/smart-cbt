@@ -27,6 +27,7 @@ const AddQuestionSet = () => {
             ques.isAdded = false;
             return ques;
           });
+          console.log(res);
           setQuestions(temp);
           setfiltered(temp);
           console.log(temp);

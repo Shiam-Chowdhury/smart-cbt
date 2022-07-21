@@ -1,5 +1,6 @@
 const Question = require('../models/Question');
-const {getQuestionsService, saveQuestionService} = require('../services/QuestionService');
+const {getQuestionsService, saveQuestionService, getPositionsService,
+    getTechnologiesService } = require('../services/QuestionService');
 
 const getQuestions = async (req, res) => {
     try{
@@ -32,7 +33,39 @@ const saveQuestion = async (req, res) => {
     }
 }
 
+const getPositions = async (req, res) => {
+    try{
+        const positions = await getPositionsService(req, res);
+        res.status(200).json({
+            positions
+        })
+    }catch(err){
+        res.status(500).json({
+            error: 'internal server error!',
+            err
+        })
+    }
+}
+
+const getTechnologies = async (req, res) => {
+    try{
+        const technologies = await getTechnologiesService(req, res);
+        res.status(200).json({
+            technologies
+        })
+    }catch(err){
+        res.status(500).json({
+            error: 'internal server error!',
+            err
+        })
+    }
+}
+
+
+
 module.exports = {
     getQuestions,
-    saveQuestion
+    saveQuestion,
+    getPositions,
+    getTechnologies
 }

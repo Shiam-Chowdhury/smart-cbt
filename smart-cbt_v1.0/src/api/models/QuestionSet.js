@@ -4,23 +4,23 @@ const Question = new Schema(
     {
         details: {
             type: String,
-            required: true
+            // required: true
         },
         tag: {
             type: String,
-            required: true
+            // required: true
         },
         type: {
             type: String,
-            required: true
+            // required: true
         },
         rank: {
             type: String,
-            required: true
+            // required: true
         },
         difficulty: {
             type: String,
-            required: true
+            // required: true
         },
         remarks: String,
         answer: {

@@ -26,10 +26,11 @@ const saveQuestionSetService = async (req, res) => {
         return questionSet;
         
     } catch (error) {
-        res.status(500).json({
-            error,
-            message: 'server error!'
-        });
+        // res.status(500).json({
+        //     error,
+        //     message: 'server error!'
+        // });
+        console.log(error);
     }
 }
 

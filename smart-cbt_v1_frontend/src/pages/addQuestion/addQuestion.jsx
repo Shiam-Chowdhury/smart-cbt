@@ -8,7 +8,7 @@ const addQuestion = ({ inputs, title }) => {
     <div className="new">
       <Sidebar />
       <div className="newContainer">
-        <Navbar />
+        {/* <Navbar /> */}
         <AddQuestion />
       </div>
     </div>

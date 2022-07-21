@@ -5,11 +5,19 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    technology: {
+        type: String,
+        required: true
+    },
     tag: {
         type: String,
         required: true
     },
     type: {
+        type: String,
+        required: true
+    },
+    position: {
         type: String,
         required: true
     },
@@ -27,7 +35,7 @@ const questionSchema = new mongoose.Schema({
         // matching_options: Array,
         // is_multiple_answer: Boolean,
         correct_answer: String,
-        correct_option: String,
+        correct_options: Array,
     },
     count: Number,
     comments: String,

@@ -1,4 +1,5 @@
 const {getQuestionSetsService, saveQuestionSetService} = require('../services/QuestionService');
+// const {saveQuestionSetService} = require('../services/QuestionSetService');
 
 const getQuestionSets = async (req, res) => {
     try{
@@ -24,10 +25,12 @@ const saveQuestionSet = async (req, res) => {
         });
         
     } catch (error) {
-        res.status(500).json({
-            error,
-            message: 'server error!'
-        });
+        // res.status(500).json({
+        //     error,
+        //     message: 'server error!'
+        // });
+        console.log('controller', error);
+
     }
 }
 

@@ -5,6 +5,21 @@
   .newContainer {
     flex: 6;
 
+    .cus-alert{
+      margin-left: 20px;
+      .success-alert{
+        width: 350px;
+        padding: 10px;
+        background-color: lightgreen;
+
+        span{
+          color: red;
+          font-weight: bold;
+          float: right;
+        }
+      }
+    }
+
     .top,
     .bottom {
       -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
@@ -28,7 +43,7 @@
           justify-content: space-between;
 
           .formInput {
-            width: 30%;
+            width: 20%;
 
             label {
               display: flex;
@@ -77,17 +92,70 @@
 
           
         }
-        button {
-          width: 150px;
-          padding: 10px;
-          border: none;
-          background-color: teal;
-          color: white;
-          font-weight: bold;
-          cursor: pointer;
-          margin-top: 10px;
-        }
+        // button {
+        //   width: 150px;
+        //   padding: 10px;
+        //   border: none;
+        //   background-color: teal;
+        //   color: white;
+        //   font-weight: bold;
+        //   cursor: pointer;
+        //   margin-top: 10px;
+        // }
       }
     }
+  }
+}
+
+.option{
+  margin-left: 10px;
+  margin-bottom: 100px;
+  .option-btn{
+    margin-top:10px;
+    padding: 3px 10px;
+    background-color: green;
+    color: white;
+    // width: 50px;
+    width:50%;
+    text-align: center;
+  }
+
+  .rmv{
+    background-color: red;
+  }
+
+  .selectAnswer{
+    padding: 3px 10px;
+    width:100%;
+  }
+
+  .btn-save {
+    text-align: center;
+    padding: 8px;
+    border: none;
+    background-color: rgb(5, 54, 22);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 150px;
+  }
+}
+
+.details-answer, .code-output, .fill-gap{
+  margin-left: 20px;
+
+  .btn-save {
+    text-align: center;
+    padding: 8px;
+    border: none;
+    background-color: rgb(5, 54, 22);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 150px;
   }
 }
